@@ -1,29 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
-import { useFeaturedBanners } from './utils/hooks/useFeaturedBanners';
+import Footer from './components/Footer';
+import Header from './components/Header';
+import MainPage from './components/MainPage';
+import GlobalStyle from './GlobalStyle';
+import { BrowserRouter as Router } from 'react-router-dom';
+import '@fontsource/metropolis';
 
-function App() {
-  const { data, isLoading } = useFeaturedBanners();
-  console.log(data, isLoading);
+// box-shadow: 13px 13px 0px -4px rgb(0, 0, 0);
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => (
+  <Router>
+    <GlobalStyle />
+    <Header />
+    <MainPage />
+    <Footer />
+  </Router>
+);
 
 export default App;
