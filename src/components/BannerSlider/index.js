@@ -25,6 +25,14 @@ const Banner = styled.img`
   object-fit: cover;
 `;
 
+const SkeltonBanner = styled.div`
+  max-height: 45vh;
+  min-height: 35rem;
+  width: 100%;
+  object-fit: cover;
+  background-color: #d4d3cf;
+`;
+
 const Title = styled.div`
   color: white;
   z-index: 2;
@@ -44,7 +52,7 @@ const Gradient = styled.div`
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0), black 115%);
 `;
 
-const BannerSlider = ({ banners = [], transitionTime = 5000 }) => {
+const BannerSlider = ({ banners = [], isLoading, transitionTime = 5000 }) => {
   const sliderSettings = {
     dots: true,
     infinite: true,
@@ -59,23 +67,27 @@ const BannerSlider = ({ banners = [], transitionTime = 5000 }) => {
 
   return (
     <Container>
-      <Slider {...sliderSettings}>
-        {banners.map(
-          ({
-            id,
-            data: {
-              title,
-              main_image: { url, alt },
-            },
-          }) => (
-            <div key={`banner-slide-${id}`}>
-              <Title>{title.split('-')[0]}</Title>
-              <Gradient />
-              <Banner src={url} alt={alt} />
-            </div>
-          )
-        )}
-      </Slider>
+      {!isLoading ? (
+        <Slider {...sliderSettings}>
+          {banners.map(
+            ({
+              id,
+              data: {
+                title,
+                main_image: { url, alt },
+              },
+            }) => (
+              <div key={`banner-slide-${id}`}>
+                <Title>{title.split('-')[0]}</Title>
+                <Gradient />
+                <Banner src={url} alt={alt} />
+              </div>
+            )
+          )}
+        </Slider>
+      ) : (
+        <SkeltonBanner />
+      )}
     </Container>
   );
 };
