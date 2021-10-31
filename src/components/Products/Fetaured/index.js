@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import List from '../List';
+import Skeleton from '../Skeleton';
 
 const Title = styled.div`
   font-size: 30px;
@@ -38,11 +39,11 @@ const StyledLink = styled(Link)`
   }
 `;
 
-const Featured = ({ products = [] }) => {
+const Featured = ({ products = [], isLoading }) => {
   return (
     <>
       <Title>Featured products</Title>
-      <List products={products} />
+      <List products={products} isLoading={isLoading} />
       <ButtonContainer>
         <div />
         <StyledLink to="/catalog">View all products</StyledLink>

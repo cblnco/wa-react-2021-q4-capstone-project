@@ -20,7 +20,7 @@ const queries = {
   [CATEGORIES]:
     '%5B%5Bat(document.type%2C%20%22category%22)%5D%5D&lang=en-us&pageSize=30',
   [FEATURED_PRODS]:
-    '%5B%5Bat(document.tags%2C%20%5B%22Featured%22%5D)%5D%5D&lang=en-us&pageSize=16',
+    '%5B%5Bat(document.type%2C%20%22product%22)%5D%5D&q=%5B%5Bat(document.tags%2C%20%5B%22Featured%22%5D)%5D%5D&lang=en-us&pageSize=16',
 };
 
 const usePrismicAPI = type => {

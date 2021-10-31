@@ -1,13 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ArrowLeft, ArrowRight } from 'react-feather';
+import Skeleton from '../Skeleton';
 
 const ProductContainer = styled.div`
   display: grid;
   gap: 2rem;
   grid-auto-flow: dense;
   grid-auto-rows: auto;
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  grid-template-columns: ${({ productsLength }) =>
+    `repeat(auto-fit, ${productsLength > 2 ? 'minmax(15rem, 1fr)' : '20rem'})`};
   margin-bottom: 4rem;
 `;
 
@@ -85,8 +87,10 @@ const Product = ({ name, background, category, price, alt }) => (
   </ProductContent>
 );
 
-const List = ({ products, filters = null, pagination = false }) => {
-  const filteredProducts = filters
+const List = ({ products, filters = null, isLoading, pagination = false }) => {
+  const filteredProducts = isLoading
+    ? []
+    : filters
     ? products.filter(product => {
         const {
           data: {
@@ -100,7 +104,10 @@ const List = ({ products, filters = null, pagination = false }) => {
 
   return (
     <div>
-      <ProductContainer>
+      <ProductContainer
+        productsLength={isLoading ? 5 : filteredProducts.length}
+      >
+        {isLoading && <Skeleton amount={5} />}
         {filteredProducts.map(
           ({
             id,
@@ -121,7 +128,7 @@ const List = ({ products, filters = null, pagination = false }) => {
             />
           )
         )}
-        {!filteredProducts.length && (
+        {!isLoading && !filteredProducts.length && (
           <NoProducts>No products available</NoProducts>
         )}
       </ProductContainer>

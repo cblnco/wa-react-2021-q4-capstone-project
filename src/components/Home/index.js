@@ -1,5 +1,4 @@
 import React from 'react';
-import featProductsData from '../../mocks/en-us/featured-products.json';
 import BannerSlider from '../BannerSlider';
 import Categories from '../Categories';
 import Featured from '../Products/Fetaured';
@@ -8,6 +7,7 @@ import {
   usePrismicAPI,
   BANNERS,
   CATEGORIES,
+  FEATURED_PRODS,
 } from '../../utils/hooks/usePrismicAPI';
 
 const Home = () => {
@@ -21,6 +21,11 @@ const Home = () => {
     isLoading: areCategoriesLoading,
   } = usePrismicAPI(CATEGORIES);
 
+  const {
+    data: { results: ftrdProductsData },
+    isLoading: areFtrdProductsLoading,
+  } = usePrismicAPI(FEATURED_PRODS);
+
   return (
     <>
       <BannerSlider banners={bannerData} isLoading={areBannersLoading} />
@@ -29,7 +34,10 @@ const Home = () => {
           categories={categoryData}
           isLoading={areCategoriesLoading}
         />
-        <Featured products={featProductsData.results} />
+        <Featured
+          products={ftrdProductsData}
+          isLoading={areFtrdProductsLoading}
+        />
       </ContentContainer>
     </>
   );
