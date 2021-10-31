@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import SkeletonCategories from './SkeletonCategories';
 
 const Title = styled.div`
   font-size: 30px;
@@ -61,23 +62,28 @@ const Card = ({ name, imgSrc, alt }) => (
   </Item>
 );
 
-const Categories = ({ categories }) => {
+const categoryCards = categories =>
+  categories.map(
+    ({
+      id,
+      data: {
+        name,
+        main_image: { alt, url },
+      },
+    }) => <Card key={`category-${id}`} name={name} imgSrc={url} alt={alt} />
+  );
+
+const Categories = ({ categories = [], isLoading }) => {
+  const cards = isLoading ? (
+    <SkeletonCategories amount={5} />
+  ) : (
+    categoryCards(categories)
+  );
+
   return (
     <>
       <Title>Our categories</Title>
-      <CategoryContainer>
-        {categories.map(
-          ({
-            id,
-            data: {
-              name,
-              main_image: { alt, url },
-            },
-          }) => (
-            <Card key={`category-${id}`} name={name} imgSrc={url} alt={alt} />
-          )
-        )}
-      </CategoryContainer>
+      <CategoryContainer>{cards}</CategoryContainer>
     </>
   );
 };
