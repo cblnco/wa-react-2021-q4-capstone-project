@@ -29,20 +29,22 @@ const Image = styled.img`
 const Description = styled.div`
   width: 100%;
   text-align: center;
-  background-color: linen;
+  background-color: #f2e9da;
+  color: #7d7d7d;
   min-height: 6rem;
   border-top: solid 1px #cbc8c1;
   padding: 0.5rem 0;
 `;
 
 const ProductName = styled.div`
-  color: black;
+  color: #5d5b5b;
   font-size: 18px;
   padding-bottom: 0.3rem;
 `;
 
 const ProductPrice = styled.div`
   font-weight: 800;
+  color: #5d5b5b;
   padding-bottom: 1rem;
 `;
 

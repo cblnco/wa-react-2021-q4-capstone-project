@@ -15,10 +15,10 @@ const ButtonContainer = styled.div`
 `;
 
 const StyledLink = styled(Link)`
-  background-color: #e9e1d2;
+  background-color: #f2e9da;
   border: none;
   cursor: pointer;
-  color: #635f5f;
+  color: #6f6969;
   font-size: 20px;
   padding: 1rem;
   border-radius: 3px;
