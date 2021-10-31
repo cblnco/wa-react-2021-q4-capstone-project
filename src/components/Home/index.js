@@ -4,19 +4,22 @@ import BannerSlider from '../BannerSlider';
 import Categories from '../Categories';
 import Featured from '../Products/Fetaured';
 import ContentContainer from '../ContentContainer';
-import { useFeaturedBanners } from '../../utils/hooks/useFeaturedBanners';
-import useCategories from '../../utils/hooks/useCategories';
+import {
+  usePrismicAPI,
+  BANNERS,
+  CATEGORIES,
+} from '../../utils/hooks/usePrismicAPI';
 
 const Home = () => {
   const {
     data: { results: bannerData },
     isLoading: areBannersLoading,
-  } = useFeaturedBanners();
+  } = usePrismicAPI(BANNERS);
 
   const {
     data: { results: categoryData },
     isLoading: areCategoriesLoading,
-  } = useCategories();
+  } = usePrismicAPI(CATEGORIES);
 
   return (
     <>
