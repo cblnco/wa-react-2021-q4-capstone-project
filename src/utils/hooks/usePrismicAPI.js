@@ -38,15 +38,19 @@ const usePrismicAPI = type => {
     async function getCategories() {
       setPrismicResponse(INITIAL_STATE);
 
-      const { data, status } = await axios(
-        `${API_BASE_URL}/documents/search?ref=${apiRef}&q=${queries[type]}`,
-        {
-          cancelToken: cancelSource.token,
-        }
-      );
+      try {
+        const { data, status } = await axios(
+          `${API_BASE_URL}/documents/search?ref=${apiRef}&q=${queries[type]}`,
+          {
+            cancelToken: cancelSource.token,
+          }
+        );
 
-      const response = status !== 200 ? {} : data;
-      setPrismicResponse({ data: response, isLoading: false });
+        const response = status !== 200 ? {} : data;
+        setPrismicResponse({ data: response, isLoading: false });
+      } catch (err) {
+        setPrismicResponse({ data: {}, isLoading: false });
+      }
     }
 
     getCategories();

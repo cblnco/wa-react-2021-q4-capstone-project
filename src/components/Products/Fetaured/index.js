@@ -27,7 +27,7 @@ const StyledLink = styled(Link)`
   text-align: center;
   text-decoration: none;
   transition: 0.2s ease-in-out;
-  border: solid 1px transparent;
+  border: solid 1px #e0e0e0;
 
   &:hover {
     border: solid 1px #d4d1d1;
