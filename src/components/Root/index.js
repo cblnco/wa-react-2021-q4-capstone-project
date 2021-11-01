@@ -1,14 +1,15 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import Home from '../Home';
+import Landing from '../Landing';
 import Catalog from '../Products/Catalog';
 import Detail from '../Products/Detail';
+import Search from '../Search';
 
-const MainPage = () => {
+const Root = () => {
   return (
     <Switch>
       <Route exact path={['/', '/home']}>
-        <Home />
+        <Landing />
       </Route>
       <Route path="/products">
         <Catalog />
@@ -16,8 +17,11 @@ const MainPage = () => {
       <Route path="/product/:productId">
         <Detail />
       </Route>
+      <Route path="/search">
+        <Search />
+      </Route>
     </Switch>
   );
 };
 
-export default MainPage;
+export default Root;

@@ -8,6 +8,7 @@ import {
   FEATURED_PRODS_QUERY,
   PRODUCT_QUERY,
   PRODUCTS_QUERY,
+  SEARCH_QUERY,
 } from '../constants';
 
 const INITIAL_STATE = {
@@ -61,4 +62,5 @@ export {
   FEATURED_PRODS_QUERY,
   PRODUCT_QUERY,
   PRODUCTS_QUERY,
+  SEARCH_QUERY,
 };

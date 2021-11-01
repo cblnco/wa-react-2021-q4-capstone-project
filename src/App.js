@@ -1,18 +1,26 @@
 import Footer from './components/Footer';
 import Header from './components/Header';
-import MainPage from './components/MainPage';
+import Root from './components/Root';
 import GlobalStyle from './GlobalStyle';
 import { BrowserRouter as Router } from 'react-router-dom';
+import styled from 'styled-components';
 import '@fontsource/metropolis';
+import ScrollToTop from './utils/ScrollToTop';
 
-// box-shadow: 13px 13px 0px -4px rgb(0, 0, 0);
+const AppContainer = styled.div`
+  position: relative;
+  min-height: 100vh;
+`;
 
 const App = () => (
   <Router>
     <GlobalStyle />
-    <Header />
-    <MainPage />
-    <Footer />
+    <ScrollToTop />
+    <AppContainer>
+      <Header />
+      <Root />
+      <Footer />
+    </AppContainer>
   </Router>
 );
 

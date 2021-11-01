@@ -61,6 +61,7 @@ const Catalog = () => {
             products={productsData}
             filters={filters}
             isLoading={areFtrdProductsLoading}
+            skeletonAmount={3}
             pagination
           />
         </PageContent>

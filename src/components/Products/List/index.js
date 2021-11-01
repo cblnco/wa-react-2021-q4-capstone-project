@@ -109,7 +109,6 @@ const CartButton = styled.button`
 
 const NoProducts = styled.h2`
   margin-top: 3rem;
-  height: 73vh;
 `;
 
 const Product = ({ id, name, background, category, price, alt }) => (
@@ -137,6 +136,7 @@ const List = ({
   isLoading,
   pagination = false,
   skeletonAmount = 2,
+  customMessage = 'No products available',
 }) => {
   const { page, total_pages, next_page, prev_page, results } = products;
   const filteredProducts = isLoading
@@ -184,7 +184,7 @@ const List = ({
           <Skeleton amount={skeletonAmount} />
         )}
         {!isLoading && !filteredProducts.length && (
-          <NoProducts>No products available</NoProducts>
+          <NoProducts>{customMessage}</NoProducts>
         )}
       </ProductContainer>
       {pagination && !isLoading && filteredProducts.length > 0 && (

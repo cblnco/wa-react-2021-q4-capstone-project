@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import {
   Search as SearchIcon,
   ShoppingBag as ShoppingIcon,
 } from 'react-feather';
 import MenuButton from '../MenuButton';
-import { Link } from 'react-router-dom';
 
 const StyledHeader = styled.header`
   position: fixed;
@@ -43,7 +43,50 @@ const Button = styled.button`
   margin: 0 0.3rem;
 `;
 
+const SearchContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+`;
+
+const SearchInput = styled.input`
+  height: 30px;
+  margin-top: 0.3rem;
+
+  ::placeholder {
+    color: #777676;
+    font-style: italic;
+  }
+`;
+
+const SearchButton = styled(Button)`
+  width: 3rem;
+  cursor: pointer;
+
+  &:active {
+    margin-left: 1px;
+  }
+`;
+
 const Header = () => {
+  const history = useHistory();
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const onSearchChange = event => {
+    const q = event.target.value;
+    setSearchTerm(q);
+  };
+
+  const toSearch = () => {
+    history.push(`/search?q=${searchTerm}`);
+    setSearchTerm('');
+  };
+
+  const onSearchKeyDown = event => {
+    if (event.key === 'Enter') {
+      toSearch();
+    }
+  };
+
   return (
     <>
       <StyledHeader>
@@ -52,9 +95,17 @@ const Header = () => {
           <LogoContainer>
             <Title to="/">Asbesto</Title>
           </LogoContainer>
-          <Button>
-            <SearchIcon size={25} />
-          </Button>
+          <SearchContainer>
+            <SearchInput
+              value={searchTerm}
+              placeholder="Search a product"
+              onKeyDown={onSearchKeyDown}
+              onChange={onSearchChange}
+            />
+            <SearchButton onClick={() => toSearch()}>
+              <SearchIcon size={25} />
+            </SearchButton>
+          </SearchContainer>
           <Button>
             <ShoppingIcon size={24} />
           </Button>
