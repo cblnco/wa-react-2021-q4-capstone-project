@@ -74,6 +74,11 @@ const SideBar = ({ categories = [], isLoading }) => {
   const areFiltersActive = verifyUsedFilters(activeFilters);
 
   useEffect(() => {
+    setActiveFilters({});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
     if (categories.length > 0) {
       const paramName = query.get('category');
       const isActive = activeFilters[paramName] || false;
@@ -87,8 +92,6 @@ const SideBar = ({ categories = [], isLoading }) => {
         }
       }
     }
-
-    return () => setActiveFilters({});
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categories]);
 
