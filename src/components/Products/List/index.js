@@ -145,11 +145,11 @@ const List = ({
     ? results.filter(product => {
         const {
           data: {
-            category: { id },
+            category: { slug },
           },
         } = product;
 
-        return filters[id];
+        return filters[slug];
       })
     : results;
 

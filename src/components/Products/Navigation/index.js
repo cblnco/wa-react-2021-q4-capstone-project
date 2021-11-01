@@ -10,7 +10,7 @@ const NavigationContent = styled.div`
   margin: 0 auto;
 `;
 
-const NumberCOntainer = styled.div`
+const NumberContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
@@ -59,11 +59,11 @@ const Navigation = ({ currentPage, totalPages, nextPage, prevPage }) => {
         const pageNumber = idx + 1;
         const isActive = currentPage === pageNumber;
         return (
-          <NumberCOntainer>
+          <NumberContainer>
             <PageNumber key={`page-navigator-${idx}`} isActive={isActive}>
               {pageNumber}
             </PageNumber>
-          </NumberCOntainer>
+          </NumberContainer>
         );
       })}
       <NavButton isActive={!!nextPage} onClick={() => handleClick(nextPage)}>
