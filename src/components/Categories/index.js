@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router';
 import styled from 'styled-components';
 import SkeletonCategories from './SkeletonCategories';
 
@@ -9,6 +10,7 @@ const Title = styled.div`
 
 const Item = styled.div`
   position: relative;
+  cursor: pointer;
 `;
 
 const Gradient = styled.div`
@@ -54,30 +56,44 @@ const CategoryContainer = styled.div`
   margin-bottom: 3rem;
 `;
 
-const Card = ({ name, imgSrc, alt }) => (
-  <Item>
+const Card = ({ name, imgSrc, alt, category, redirect }) => (
+  <Item onClick={() => redirect(category)}>
     <Image src={imgSrc} alt={alt} />
     <Gradient />
     <CardName>{name}</CardName>
   </Item>
 );
 
-const categoryCards = categories =>
+const categoryCards = (categories, redirect) =>
   categories.map(
     ({
       id,
+      slugs,
       data: {
         name,
         main_image: { alt, url },
       },
-    }) => <Card key={`category-${id}`} name={name} imgSrc={url} alt={alt} />
+    }) => (
+      <Card
+        key={`category-${id}`}
+        name={name}
+        category={slugs[0]}
+        imgSrc={url}
+        alt={alt}
+        redirect={redirect}
+      />
+    )
   );
 
 const Categories = ({ categories = [], isLoading }) => {
+  const history = useHistory();
+
+  const toProduct = category => history.push(`/products?category=${category}`);
+
   const cards = isLoading ? (
     <SkeletonCategories amount={5} />
   ) : (
-    categoryCards(categories)
+    categoryCards(categories, toProduct)
   );
 
   return (

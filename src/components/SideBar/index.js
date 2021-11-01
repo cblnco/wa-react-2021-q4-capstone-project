@@ -87,6 +87,8 @@ const SideBar = ({ categories = [], isLoading }) => {
         }
       }
     }
+
+    return () => setActiveFilters({});
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categories]);
 

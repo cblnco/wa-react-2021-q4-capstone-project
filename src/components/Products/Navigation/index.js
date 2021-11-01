@@ -59,7 +59,7 @@ const Navigation = ({ currentPage, totalPages, nextPage, prevPage }) => {
         const pageNumber = idx + 1;
         const isActive = currentPage === pageNumber;
         return (
-          <NumberContainer>
+          <NumberContainer key={`number-container-${idx}`}>
             <PageNumber key={`page-navigator-${idx}`} isActive={isActive}>
               {pageNumber}
             </PageNumber>
