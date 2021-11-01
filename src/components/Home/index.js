@@ -5,26 +5,24 @@ import Featured from '../Products/Fetaured';
 import ContentContainer from '../ContentContainer';
 import {
   usePrismicAPI,
-  BANNERS,
-  CATEGORIES,
-  FEATURED_PRODS,
+  BANNERS_QUERY,
+  CATEGORIES_QUERY,
+  FEATURED_PRODS_QUERY,
 } from '../../utils/hooks/usePrismicAPI';
 
 const Home = () => {
   const {
     data: { results: bannerData },
     isLoading: areBannersLoading,
-  } = usePrismicAPI(BANNERS);
+  } = usePrismicAPI(BANNERS_QUERY);
 
   const {
     data: { results: categoryData },
     isLoading: areCategoriesLoading,
-  } = usePrismicAPI(CATEGORIES);
+  } = usePrismicAPI(CATEGORIES_QUERY);
 
-  const {
-    data: { results: ftrdProductsData },
-    isLoading: areFtrdProductsLoading,
-  } = usePrismicAPI(FEATURED_PRODS);
+  const { data: ftrdProductsData, isLoading: areFtrdProductsLoading } =
+    usePrismicAPI(FEATURED_PRODS_QUERY);
 
   return (
     <>

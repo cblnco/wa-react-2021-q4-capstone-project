@@ -3,9 +3,11 @@ import { useLatestAPI } from './useLatestAPI';
 import axios from 'axios';
 import {
   API_BASE_URL,
-  BANNERS,
-  CATEGORIES,
-  FEATURED_PRODS,
+  BANNERS_QUERY,
+  CATEGORIES_QUERY,
+  FEATURED_PRODS_QUERY,
+  PRODUCT_QUERY,
+  PRODUCTS_QUERY,
 } from '../constants';
 
 const INITIAL_STATE = {
@@ -13,17 +15,7 @@ const INITIAL_STATE = {
   isLoading: true,
 };
 
-const queries = {
-  [BANNERS]: `${encodeURIComponent(
-    '[[at(document.type, "banner")]]'
-  )}&lang=en-us&pageSize=5`,
-  [CATEGORIES]:
-    '%5B%5Bat(document.type%2C%20%22category%22)%5D%5D&lang=en-us&pageSize=30',
-  [FEATURED_PRODS]:
-    '%5B%5Bat(document.type%2C%20%22product%22)%5D%5D&q=%5B%5Bat(document.tags%2C%20%5B%22Featured%22%5D)%5D%5D&lang=en-us&pageSize=16',
-};
-
-const usePrismicAPI = type => {
+const usePrismicAPI = query => {
   const { ref: apiRef, isLoading: isApiMetadataLoading } = useLatestAPI();
   const [prismicResponse, setPrismicResponse] = useState(INITIAL_STATE);
 
@@ -39,12 +31,11 @@ const usePrismicAPI = type => {
       setPrismicResponse(INITIAL_STATE);
 
       try {
-        const { data, status } = await axios(
-          `${API_BASE_URL}/documents/search?ref=${apiRef}&q=${queries[type]}`,
-          {
-            cancelToken: cancelSource.token,
-          }
-        );
+        const apiURL = `${API_BASE_URL}/documents/search?ref=${apiRef}`;
+        console.log(apiURL);
+        const { data, status } = await axios(`${apiURL}&q=${query}`, {
+          cancelToken: cancelSource.token,
+        });
 
         const response = status !== 200 ? {} : data;
         setPrismicResponse({ data: response, isLoading: false });
@@ -64,4 +55,11 @@ const usePrismicAPI = type => {
   return prismicResponse;
 };
 
-export { usePrismicAPI, BANNERS, CATEGORIES, FEATURED_PRODS };
+export {
+  usePrismicAPI,
+  BANNERS_QUERY,
+  CATEGORIES_QUERY,
+  FEATURED_PRODS_QUERY,
+  PRODUCT_QUERY,
+  PRODUCTS_QUERY,
+};

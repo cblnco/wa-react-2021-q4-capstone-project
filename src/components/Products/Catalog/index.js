@@ -1,9 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import List from '../List';
 import styled from 'styled-components';
 import useFilter from '../../../hooks/useFilter';
-import Skeleton from '../Skeleton';
 import SideBar from '../../SideBar';
+import ContentContainer from '../../ContentContainer';
+import { PRODUCTS_QUERY } from '../../../utils/constants';
+import {
+  usePrismicAPI,
+  CATEGORIES_QUERY,
+} from '../../../utils/hooks/usePrismicAPI';
+import usePrismicRedux from '../../../utils/hooks/usePrismicRedux';
+import { PRODUCTS_NAME, updateProducts } from '../../../redux/slices/products';
 
 const CatalogContainer = styled.div`
   margin-top: 4rem;
@@ -33,28 +40,32 @@ const processFilters = filters => {
   return areFiltersActive ? filters : null;
 };
 
-const Catalog = ({ products = [], categories = [] }) => {
+const Catalog = () => {
   const [activeFilters] = useFilter();
-  const [isLoading, setIsLoading] = useState(true);
   const filters = processFilters(activeFilters);
+  const { data: productsData, isLoading: areFtrdProductsLoading } =
+    usePrismicRedux(PRODUCTS_NAME, PRODUCTS_QUERY, updateProducts);
 
-  useEffect(() => {
-    const timeout = setTimeout(() => setIsLoading(value => !value), 2000);
-    return () => clearTimeout(timeout);
-  }, []);
+  const {
+    data: { results: categories },
+    isLoading: areCategoriesLoading,
+  } = usePrismicAPI(CATEGORIES_QUERY);
 
   return (
-    <CatalogContainer>
-      <Title>Our products</Title>
-      {isLoading ? (
-        <Skeleton amount={7} />
-      ) : (
+    <ContentContainer>
+      <CatalogContainer>
+        <Title>Our products</Title>
         <PageContent>
-          <SideBar categories={categories} />
-          <List products={products} filters={filters} pagination />
+          <SideBar categories={categories} isLoading={areCategoriesLoading} />
+          <List
+            products={productsData}
+            filters={filters}
+            isLoading={areFtrdProductsLoading}
+            pagination
+          />
         </PageContent>
-      )}
-    </CatalogContainer>
+      </CatalogContainer>
+    </ContentContainer>
   );
 };
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ArrowLeft, ArrowRight } from 'react-feather';
 import Skeleton from '../Skeleton';
 import { Link } from 'react-router-dom';
+import Navigation from '../Navigation';
 
 const ProductContainer = styled.div`
   display: grid;
@@ -109,26 +109,7 @@ const CartButton = styled.button`
 
 const NoProducts = styled.h2`
   margin-top: 3rem;
-  margin-bottom: 100%;
-`;
-
-const Navigation = styled.div`
-  display: flex;
-  margin: 0 auto;
-`;
-
-const Pages = styled.div`
-  font-size: 29px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  color: black;
-`;
-
-const NavButton = styled.button`
-  background-color: transparent;
-  border: none;
-  cursor: not-allowed;
+  height: 73vh;
 `;
 
 const Product = ({ id, name, background, category, price, alt }) => (
@@ -142,7 +123,7 @@ const Product = ({ id, name, background, category, price, alt }) => (
       <PriceContent>
         <ProductPrice>{price} $</ProductPrice>
         <DetailsContent>
-          <DetailsLink to={`/products?id=${id}`}>More details</DetailsLink>
+          <DetailsLink to={`/product/${id}`}>More details</DetailsLink>
         </DetailsContent>
       </PriceContent>
       <CartButton>Add to cart</CartButton>
@@ -150,11 +131,18 @@ const Product = ({ id, name, background, category, price, alt }) => (
   </ProductContent>
 );
 
-const List = ({ products, filters = null, isLoading, pagination = false }) => {
+const List = ({
+  products,
+  filters = null,
+  isLoading,
+  pagination = false,
+  skeletonAmount = 2,
+}) => {
+  const { page, total_pages, next_page, prev_page, results } = products;
   const filteredProducts = isLoading
     ? []
     : filters
-    ? products.filter(product => {
+    ? results.filter(product => {
         const {
           data: {
             category: { id },
@@ -163,49 +151,49 @@ const List = ({ products, filters = null, isLoading, pagination = false }) => {
 
         return filters[id];
       })
-    : products;
+    : results;
 
   return (
     <div>
       <ProductContainer
-        productsLength={isLoading ? 5 : filteredProducts.length}
+        productsLength={isLoading ? skeletonAmount : filteredProducts.length}
       >
-        {isLoading && <Skeleton amount={5} />}
-        {filteredProducts.map(
-          ({
-            id,
-            data: {
-              name,
-              price,
-              category: { slug },
-              mainimage: { url, alt },
-            },
-          }) => (
-            <Product
-              key={`product-${id}`}
-              id={id}
-              background={url}
-              name={name}
-              category={slug}
-              price={price}
-              alt={alt}
-            />
+        {!isLoading ? (
+          filteredProducts.map(
+            ({
+              id,
+              data: {
+                name,
+                price,
+                category: { slug },
+                mainimage: { url, alt },
+              },
+            }) => (
+              <Product
+                key={`product-${id}`}
+                id={id}
+                background={url}
+                name={name}
+                category={slug}
+                price={price}
+                alt={alt}
+              />
+            )
           )
+        ) : (
+          <Skeleton amount={skeletonAmount} />
         )}
         {!isLoading && !filteredProducts.length && (
           <NoProducts>No products available</NoProducts>
         )}
       </ProductContainer>
-      {pagination && filteredProducts.length && (
-        <Navigation>
-          <NavButton>
-            <ArrowLeft size={26} />
-          </NavButton>
-          <Pages>1</Pages>
-          <NavButton>
-            <ArrowRight size={26} />
-          </NavButton>
-        </Navigation>
+      {pagination && !isLoading && filteredProducts.length > 0 && (
+        <Navigation
+          currentPage={page}
+          totalPages={total_pages}
+          nextPage={next_page}
+          prevPage={prev_page}
+        />
       )}
     </div>
   );

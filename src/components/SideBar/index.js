@@ -25,7 +25,7 @@ const Title = styled.h3`
   padding: 0 2rem;
 `;
 
-const SideBar = ({ categories = [] }) => {
+const SideBar = ({ categories = [], isLoading }) => {
   const [activeFilters, setActiveFilters] = useFilter();
 
   const onFilterClick = filterId => {
@@ -40,15 +40,17 @@ const SideBar = ({ categories = [] }) => {
     <MenuContainer>
       <Title>Filter by category</Title>
       <UnorderedList>
-        {categories.map(({ id, data: { name } }) => (
-          <Item
-            key={`category-list-${id}`}
-            isActive={activeFilters[id]}
-            onClick={() => onFilterClick(id)}
-          >
-            {name}
-          </Item>
-        ))}
+        {!isLoading &&
+          categories.length > 0 &&
+          categories.map(({ id, data: { name } }) => (
+            <Item
+              key={`category-list-${id}`}
+              isActive={activeFilters[id]}
+              onClick={() => onFilterClick(id)}
+            >
+              {name}
+            </Item>
+          ))}
       </UnorderedList>
     </MenuContainer>
   );

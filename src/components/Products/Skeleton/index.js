@@ -2,37 +2,29 @@ import React from 'react';
 import { Loader } from 'react-feather';
 import styled, { keyframes } from 'styled-components';
 
-const ProductContainer = styled.div`
-  display: grid;
-  gap: 2rem;
-  grid-auto-flow: dense;
-  grid-auto-rows: auto;
-  grid-template-columns: ${({ productsLength }) =>
-    `repeat(auto-fit, ${productsLength > 2 ? 'minmax(15rem, 1fr)' : '20rem'})`};
-  margin-bottom: 100%;
-`;
-
 const ProductContent = styled.div`
-  display: grid;
-  justify-items: center;
   border-radius: 2px;
   border: solid 1px #cbc8c1;
   box-shadow: 2px 3px 5px -2px rgba(0, 0, 0, 0.32);
 `;
 
+const ImageContent = styled.div`
+  position: relative;
+`;
+
 const ImagePlaceholder = styled.div`
-  height: 14rem;
-  background-color: #efefef;
+  min-height: 16rem;
   width: 100%;
+  background-color: #efefef;
+  object-fit: contain;
 `;
 
 const Description = styled.div`
-  width: 100%;
   text-align: center;
   background-color: #f2e9da;
   min-height: 6rem;
   border-top: solid 1px #cbc8c1;
-  padding: 0.5rem 0;
+  padding: 0.7rem;
 `;
 
 const StyledLoader = styled(Loader)`
@@ -54,10 +46,12 @@ const Spinner = styled.div`
 
 const Product = () => (
   <ProductContent>
-    <ImagePlaceholder />
+    <ImageContent>
+      <ImagePlaceholder />
+    </ImageContent>
     <Description>
       <Spinner>
-        <StyledLoader size={40} color="#8b8b8b" />
+        <StyledLoader size={40} color="#5d5b5b" />
       </Spinner>
     </Description>
   </ProductContent>
