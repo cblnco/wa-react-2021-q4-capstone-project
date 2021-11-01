@@ -58,11 +58,20 @@ const Title = styled.h3`
   padding: 0 2rem;
 `;
 
+const verifyUsedFilters = filters => {
+  for (let filterId in filters) {
+    if (filters.hasOwnProperty(filterId) && filters[filterId]) {
+      return true;
+    }
+  }
+
+  return false;
+};
+
 const SideBar = ({ categories = [], isLoading }) => {
   const query = useQuery();
   const [activeFilters, setActiveFilters] = useFilter();
-
-  console.log(activeFilters);
+  const areFiltersActive = verifyUsedFilters(activeFilters);
 
   useEffect(() => {
     if (categories.length > 0) {
@@ -71,8 +80,6 @@ const SideBar = ({ categories = [], isLoading }) => {
 
       for (let category of categories) {
         const slug = category.slugs[0];
-
-        console.log(`${category} ? ${slug}`);
 
         if (paramName === slug) {
           setActiveFilters(filters => ({ ...filters, [paramName]: !isActive }));
@@ -106,7 +113,7 @@ const SideBar = ({ categories = [], isLoading }) => {
                 {name}
               </Item>
             ))}
-            {Object.keys(activeFilters).length > 0 && (
+            {areFiltersActive && (
               <ButtonContainer>
                 <ClearButton onClick={() => setActiveFilters({})}>
                   Clear filters

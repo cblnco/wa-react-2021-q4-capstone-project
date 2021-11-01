@@ -32,7 +32,6 @@ const usePrismicAPI = query => {
 
       try {
         const apiURL = `${API_BASE_URL}/documents/search?ref=${apiRef}`;
-        console.log(apiURL);
         const { data, status } = await axios(`${apiURL}&q=${query}`, {
           cancelToken: cancelSource.token,
         });
