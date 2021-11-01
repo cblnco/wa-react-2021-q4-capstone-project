@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import useFilter from '../../hooks/useFilter';
+import useFilter from '../../utils/hooks/useFilter';
 import useQuery from '../../utils/hooks/useQuery';
 
 const MenuContainer = styled.div``;

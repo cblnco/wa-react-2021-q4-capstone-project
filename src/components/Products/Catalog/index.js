@@ -1,7 +1,7 @@
 import React from 'react';
 import List from '../List';
 import styled from 'styled-components';
-import useFilter from '../../../hooks/useFilter';
+import useFilter from '../../../utils/hooks/useFilter';
 import SideBar from '../../SideBar';
 import ContentContainer from '../../ContentContainer';
 import { PRODUCTS_QUERY } from '../../../utils/constants';
