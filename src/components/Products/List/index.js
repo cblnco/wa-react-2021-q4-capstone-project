@@ -111,6 +111,26 @@ const NoProducts = styled.h2`
   margin-top: 3rem;
 `;
 
+const getFilteredProducts = (isLoading, filters, results) => {
+  if (isLoading) {
+    return [];
+  }
+
+  if (filters) {
+    return results.filter(product => {
+      const {
+        data: {
+          category: { slug },
+        },
+      } = product;
+
+      return filters[slug];
+    });
+  }
+
+  return results;
+};
+
 const Product = ({ id, name, background, category, price, alt }) => (
   <ProductContent>
     <PictureContent>
@@ -139,19 +159,7 @@ const List = ({
   customMessage = 'No products available',
 }) => {
   const { page, total_pages, next_page, prev_page, results } = products;
-  const filteredProducts = isLoading
-    ? []
-    : filters
-    ? results.filter(product => {
-        const {
-          data: {
-            category: { slug },
-          },
-        } = product;
-
-        return filters[slug];
-      })
-    : results;
+  const filteredProducts = getFilteredProducts(isLoading, filters, results);
 
   return (
     <div>

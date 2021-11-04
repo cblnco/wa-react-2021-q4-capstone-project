@@ -50,7 +50,7 @@ const usePrismicAPI = query => {
       cancelSource.cancel();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [apiRef, isApiMetadataLoading]);
+  }, [query, apiRef, isApiMetadataLoading]);
 
   return prismicResponse;
 };
