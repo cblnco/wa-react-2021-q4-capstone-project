@@ -96,7 +96,6 @@ const Detail = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
-  console.log(data);
 
   return (
     <ContentContainer>

@@ -25,7 +25,7 @@ const SpecContainer = styled.div`
 `;
 
 const SpecTitle = styled.div`
-  font-size: 17px;
+  font-size: 16px;
   color: #4d4a46;
   font-weight: bold;
 `;
@@ -49,7 +49,7 @@ const getColumns = specs => {
 };
 
 const renderSpec = ({ spec_name, spec_value }) => (
-  <SpecContainer>
+  <SpecContainer key={`product-spec-${spec_name}`}>
     <SpecTitle>{spec_name}:</SpecTitle>
     <SpecValue>{spec_value}</SpecValue>
   </SpecContainer>
