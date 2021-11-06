@@ -2,37 +2,29 @@ import React from 'react';
 import { Loader } from 'react-feather';
 import styled, { keyframes } from 'styled-components';
 
-const ProductContainer = styled.div`
-  display: grid;
-  gap: 2rem;
-  grid-auto-flow: dense;
-  grid-auto-rows: auto;
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-  margin-bottom: 100%;
-`;
-
 const ProductContent = styled.div`
-  display: grid;
-  justify-items: center;
   border-radius: 2px;
   border: solid 1px #cbc8c1;
-
   box-shadow: 2px 3px 5px -2px rgba(0, 0, 0, 0.32);
 `;
 
+const ImageContent = styled.div`
+  position: relative;
+`;
+
 const ImagePlaceholder = styled.div`
-  height: 14rem;
-  background-color: #efefef;
+  min-height: 16rem;
   width: 100%;
+  background-color: #efefef;
+  object-fit: contain;
 `;
 
 const Description = styled.div`
-  width: 100%;
   text-align: center;
-  background-color: linen;
+  background-color: #f2e9da;
   min-height: 6rem;
   border-top: solid 1px #cbc8c1;
-  padding: 0.5rem 0;
+  padding: 0.7rem;
 `;
 
 const StyledLoader = styled(Loader)`
@@ -52,19 +44,14 @@ const Spinner = styled.div`
   animation: ${spinAnimation} infinite 4s linear;
 `;
 
-const Content = styled.div`
-  display: grid;
-  gap: 2rem;
-  grid-auto-rows: auto;
-  grid-template-columns: 17rem 1fr;
-`;
-
 const Product = () => (
   <ProductContent>
-    <ImagePlaceholder />
+    <ImageContent>
+      <ImagePlaceholder />
+    </ImageContent>
     <Description>
       <Spinner>
-        <StyledLoader size={40} color="#8b8b8b" />
+        <StyledLoader size={40} color="#5d5b5b" />
       </Spinner>
     </Description>
   </ProductContent>
@@ -72,16 +59,9 @@ const Product = () => (
 
 const Skeleton = ({ amount = 0 }) => {
   const placeholders = new Array(amount).fill();
-  return (
-    <Content>
-      <div />
-      <ProductContainer>
-        {placeholders.map((_, idx) => (
-          <Product key={`product-skeleton-${idx}`} />
-        ))}
-      </ProductContainer>
-    </Content>
-  );
+  return placeholders.map((_, idx) => (
+    <Product key={`product-skeleton-${idx}`} />
+  ));
 };
 
 export default Skeleton;

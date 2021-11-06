@@ -1,6 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import useRoute from '../../../hooks/useRoute';
 import List from '../List';
 
 const Title = styled.div`
@@ -14,18 +14,19 @@ const ButtonContainer = styled.div`
   margin-bottom: 3rem;
 `;
 
-const Button = styled.div`
-  background-color: #e9e1d2;
+const StyledLink = styled(Link)`
+  background-color: #f2e9da;
   border: none;
   cursor: pointer;
-  color: #635f5f;
+  color: #6f6969;
   font-size: 20px;
   padding: 1rem;
   border-radius: 3px;
   box-shadow: 2px 3px 5px -4px rgba(0, 0, 0, 0.32);
   text-align: center;
+  text-decoration: none;
   transition: 0.2s ease-in-out;
-  border: solid 1px transparent;
+  border: solid 1px #e0e0e0;
 
   &:hover {
     border: solid 1px #d4d1d1;
@@ -37,15 +38,14 @@ const Button = styled.div`
   }
 `;
 
-const Featured = ({ products = [] }) => {
-  const [, setRoute] = useRoute();
+const Featured = ({ products = [], isLoading }) => {
   return (
     <>
       <Title>Featured products</Title>
-      <List products={products} />
+      <List products={products} isLoading={isLoading} />
       <ButtonContainer>
         <div />
-        <Button onClick={() => setRoute('/products')}>View all products</Button>
+        <StyledLink to="/products">View all products</StyledLink>
       </ButtonContainer>
     </>
   );
