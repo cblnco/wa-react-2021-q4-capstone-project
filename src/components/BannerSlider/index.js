@@ -5,7 +5,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
 const Container = styled.div`
-  padding-top: 4rem;
+  padding-top: 3.9rem;
 
   .slick-dots {
     width: unset;

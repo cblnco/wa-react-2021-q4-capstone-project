@@ -49,11 +49,11 @@ const SearchBar = styled.div`
   padding: 10px 20px;
   margin: 0 auto;
   position: absolute;
-  background-color: #ece6db;
+  background-color: whitesmoke;
   width: 100%;
   transition: all 0.3s ease-in;
   top: ${({ isVisible }) => (isVisible ? '0rem' : '-4rem')};
-  height: 2.7rem;
+  height: 2.6rem;
   justify-content: center;
   z-index: 1;
 `;
@@ -63,6 +63,7 @@ const SearchInput = styled.input`
   width: 29rem;
   height: 2.2rem;
   border: 0;
+  color: #3d3b39;
   border-bottom: 2px solid #d5bf9d;
   background-color: transparent;
   font-size: 20px;
@@ -115,7 +116,12 @@ const Header = () => {
       <SearchBar isVisible={isSearchVisible}>
         <LogoContainer>
           <SearchIcon
-            style={{ padding: '5px', cursor: 'pointer', color: '#6b665c' }}
+            style={{
+              padding: '5px',
+              cursor: 'pointer',
+              color: '#6b665c',
+              strokeWidth: '1px',
+            }}
             size={35}
             onClick={toSearch}
           />
@@ -127,7 +133,12 @@ const Header = () => {
           />
           <X
             size={35}
-            style={{ padding: '5px', color: '#6b665c', cursor: 'pointer' }}
+            style={{
+              padding: '5px',
+              color: '#6b665c',
+              cursor: 'pointer',
+              strokeWidth: '1px',
+            }}
             onClick={toggleSearchBar}
           />
         </LogoContainer>

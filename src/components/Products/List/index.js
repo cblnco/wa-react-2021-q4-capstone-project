@@ -140,7 +140,7 @@ const Product = ({ id, name, background, category, price, alt }) => (
     <Description>
       <ProductName>{name}</ProductName>
       <PriceContent>
-        <ProductPrice>{price} $</ProductPrice>
+        <ProductPrice>{`$${price}`}</ProductPrice>
         <DetailsContent>
           <DetailsLink to={`/product/${id}`}>More details</DetailsLink>
         </DetailsContent>
