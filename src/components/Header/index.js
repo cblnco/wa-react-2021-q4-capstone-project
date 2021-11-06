@@ -82,6 +82,24 @@ const SearchButton = styled(Button)`
   cursor: pointer;
 `;
 
+const CartButton = styled(Button)`
+  position: relative;
+`;
+
+const NumberBadge = styled.div`
+  position: absolute;
+  right: -5px;
+  top: -1px;
+  padding: 2px;
+  width: 16px;
+  font-size: 13px;
+  border-radius: 50%;
+  color: #504f4e;
+  background-color: #e1bf8b;
+  box-shadow: 2px 3px 5px -4px rgba(0, 0, 0, 0.32);
+  border: 1px solid #c8b28f;
+`;
+
 const Header = () => {
   const history = useHistory();
   const [isSearchVisible, setIsSearchVisible] = useState(false);
@@ -149,9 +167,10 @@ const Header = () => {
         <SearchButton onClick={toggleSearchBar}>
           <SearchIcon style={{ color: '#6b665c' }} size={25} />
         </SearchButton>
-        <Button>
+        <CartButton>
+          <NumberBadge>1</NumberBadge>
           <ShoppingIcon style={{ color: '#6b665c' }} size={24} />
-        </Button>
+        </CartButton>
       </HeaderContainer>
     </StyledHeader>
   );
