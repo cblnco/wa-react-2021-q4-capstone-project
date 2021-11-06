@@ -6,7 +6,6 @@ import {
   ShoppingBag as ShoppingIcon,
   X,
 } from 'react-feather';
-import MenuButton from '../MenuButton';
 
 const StyledHeader = styled.header`
   position: fixed;
