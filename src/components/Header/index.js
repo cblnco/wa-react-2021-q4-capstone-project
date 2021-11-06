@@ -6,6 +6,7 @@ import {
   ShoppingBag as ShoppingIcon,
   X,
 } from 'react-feather';
+import { useSelector } from 'react-redux';
 
 const StyledHeader = styled.header`
   position: fixed;
@@ -39,7 +40,7 @@ const Title = styled(Link)`
 const Button = styled.button`
   background-color: transparent;
   border: none;
-  cursor: not-allowed;
+  cursor: pointer;
   margin: 0 0.3rem;
 `;
 
@@ -104,6 +105,7 @@ const Header = () => {
   const history = useHistory();
   const [isSearchVisible, setIsSearchVisible] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const { totalUnits } = useSelector(state => state.cart);
 
   const onSearchChange = event => {
     const q = event.target.value;
@@ -167,8 +169,8 @@ const Header = () => {
         <SearchButton onClick={toggleSearchBar}>
           <SearchIcon style={{ color: '#6b665c' }} size={25} />
         </SearchButton>
-        <CartButton>
-          <NumberBadge>1</NumberBadge>
+        <CartButton onClick={() => history.push('/cart')}>
+          {totalUnits > 0 && <NumberBadge>{totalUnits}</NumberBadge>}
           <ShoppingIcon style={{ color: '#6b665c' }} size={24} />
         </CartButton>
       </HeaderContainer>

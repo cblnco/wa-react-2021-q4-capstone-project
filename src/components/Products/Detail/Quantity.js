@@ -82,19 +82,22 @@ const Stock = styled.div`
   margin-bottom: 0.3rem;
 `;
 
-const Quantity = ({ stock }) => {
-  const isDisabled = stock === 0;
+const Quantity = ({ stock, productQuantity, onCartDispatch }) => {
+  const isDisabled = stock === productQuantity;
   const [quantity, setQuantity] = useState(1);
 
   const changeQuantity = increment => {
     let value = quantity + increment;
-    if (value < 1) {
-      value = 1;
-    } else if (value > stock) {
-      value = stock;
+    if (value < 1 || value + productQuantity > stock) {
+      return;
     }
 
-    setQuantity(value);
+    setQuantity(quantity + increment);
+  };
+
+  const onAddToCart = () => {
+    setQuantity(1);
+    onCartDispatch(quantity);
   };
 
   return (
@@ -110,7 +113,11 @@ const Quantity = ({ stock }) => {
           <ChevronUp color="#767472" />
         </Button>
       </Units>
-      <CartButton isActive={!isDisabled} disabled={isDisabled}>
+      <CartButton
+        isActive={!isDisabled}
+        disabled={isDisabled}
+        onClick={onAddToCart}
+      >
         Add to cart
       </CartButton>
     </>
