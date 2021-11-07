@@ -29,12 +29,37 @@ export const cartSlice = createSlice({
       };
       state.totalUnits += cartProduct.quantity;
       state.totalPrice += cartProduct.subtotal;
+    },
+    updateQuantity: (state, action) => {
+      const { id, increment } = action.payload;
+      const newProduct = { ...state.shoppingCart[id] };
 
-      console.log(state.shoppingCart);
+      newProduct.quantity += increment;
+      newProduct.subtotal = newProduct.quantity * newProduct.price;
+
+      if (newProduct.quantity > 0) {
+        state.shoppingCart = {
+          ...state.shoppingCart,
+          [id]: newProduct,
+        };
+      } else {
+        delete state.shoppingCart[id];
+      }
+
+      state.totalUnits += increment;
+      state.totalPrice += newProduct.price * increment;
+    },
+    deleteProduct: (state, action) => {
+      const { id } = action.payload;
+      const { quantity, subtotal } = state.shoppingCart[id];
+
+      state.totalUnits -= quantity;
+      state.totalPrice -= subtotal;
+      delete state.shoppingCart[id];
     },
   },
 });
 
-export const { addToCart } = cartSlice.actions;
+export const { addToCart, updateQuantity, deleteProduct } = cartSlice.actions;
 
 export default cartSlice.reducer;

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ChevronDown, ChevronUp } from 'react-feather';
 import styled from 'styled-components';
 
-const Units = styled.div`
+const UnitsContainer = styled.div`
   width: 9.5rem;
   height: 2.4rem;
   margin-bottom: 4rem;
@@ -60,7 +60,7 @@ const Button = styled.button`
   height: 100%;
   border: 2px solid #cbc8c1;
   height: 2.4rem;
-  cursor: pointer;
+  cursor: ${({ isActive }) => (isActive ? 'pointer' : 'not-allowed')};
 `;
 
 const Input = styled.input`
@@ -81,6 +81,31 @@ const Stock = styled.div`
   color: #413f3c;
   margin-bottom: 0.3rem;
 `;
+
+export const Units = ({
+  isUpDisabled,
+  isDownDisabled,
+  quantity,
+  changeQuantity,
+}) => (
+  <UnitsContainer>
+    <Button
+      isActive={!isDownDisabled}
+      disabled={isDownDisabled}
+      onClick={() => changeQuantity(-1)}
+    >
+      <ChevronDown color="#767472" />
+    </Button>
+    <Input value={quantity} disabled />
+    <Button
+      isActive={!isUpDisabled}
+      disabled={isUpDisabled}
+      onClick={() => changeQuantity(1)}
+    >
+      <ChevronUp color="#767472" />
+    </Button>
+  </UnitsContainer>
+);
 
 const Quantity = ({ stock, productQuantity, onCartDispatch }) => {
   const isDisabled = stock === productQuantity;
@@ -104,15 +129,12 @@ const Quantity = ({ stock, productQuantity, onCartDispatch }) => {
     <>
       <Title>QUANTITY</Title>
       <Stock>Current stock: {stock}</Stock>
-      <Units>
-        <Button disabled={isDisabled} onClick={() => changeQuantity(-1)}>
-          <ChevronDown color="#767472" />
-        </Button>
-        <Input value={quantity} disabled />
-        <Button disabled={isDisabled} onClick={() => changeQuantity(1)}>
-          <ChevronUp color="#767472" />
-        </Button>
-      </Units>
+      <Units
+        isUpDisabled={isDisabled}
+        isDownDisabled={isDisabled}
+        quantity={quantity}
+        changeQuantity={changeQuantity}
+      />
       <CartButton
         isActive={!isDisabled}
         disabled={isDisabled}

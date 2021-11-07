@@ -84,7 +84,7 @@ const DetailsLink = styled(Link)`
   color: #918b83;
 `;
 
-const CartButton = styled.button`
+export const CartButton = styled.button`
   width: 100%;
   padding: 0.6rem;
   font-size: 21px;
