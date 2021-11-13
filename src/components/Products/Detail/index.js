@@ -63,7 +63,7 @@ const Detail = () => {
   const { productId } = useParams();
   const query = PRODUCT_QUERY.replace('{productId}', productId);
   const dispatch = useDispatch();
-  const { shoppingCart } = useSelector(state => state.cart);
+  const { shoppingCart } = useSelector((state) => state.cart);
   const { data, isLoading } = usePrismicAPI(query);
 
   if (isLoading) {
@@ -88,7 +88,7 @@ const Detail = () => {
 
   const productQuantity = shoppingCart[id] ? shoppingCart[id].quantity : 0;
 
-  const onCartDispatch = quantity => {
+  const onCartDispatch = (quantity) => {
     const { url, alt } = mainimage;
     dispatch(
       addToCart({
@@ -106,7 +106,7 @@ const Detail = () => {
   };
 
   const settings = {
-    customPaging: i => {
+    customPaging: (i) => {
       const {
         image: { alt, url },
       } = images[i];

@@ -58,7 +58,7 @@ const Title = styled.h3`
   padding: 0 2rem;
 `;
 
-const verifyUsedFilters = filters => {
+const verifyUsedFilters = (filters) => {
   for (let filterId in filters) {
     if (filters.hasOwnProperty(filterId) && filters[filterId]) {
       return true;
@@ -87,7 +87,10 @@ const SideBar = ({ categories = [], isLoading }) => {
         const slug = category.slugs[0];
 
         if (paramName === slug) {
-          setActiveFilters(filters => ({ ...filters, [paramName]: !isActive }));
+          setActiveFilters((filters) => ({
+            ...filters,
+            [paramName]: !isActive,
+          }));
           break;
         }
       }
@@ -95,9 +98,9 @@ const SideBar = ({ categories = [], isLoading }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categories]);
 
-  const onFilterClick = filterId => {
+  const onFilterClick = (filterId) => {
     const isActive = activeFilters[filterId] || false;
-    setActiveFilters(filters => ({
+    setActiveFilters((filters) => ({
       ...filters,
       [filterId]: !isActive,
     }));

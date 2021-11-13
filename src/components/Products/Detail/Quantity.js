@@ -111,7 +111,7 @@ const Quantity = ({ stock, productQuantity, onCartDispatch }) => {
   const isDisabled = stock === productQuantity;
   const [quantity, setQuantity] = useState(1);
 
-  const changeQuantity = increment => {
+  const changeQuantity = (increment) => {
     let value = quantity + increment;
     if (value < 1 || value + productQuantity > stock) {
       return;

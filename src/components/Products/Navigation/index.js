@@ -40,7 +40,7 @@ const Navigation = ({ currentPage, totalPages, nextPage, prevPage }) => {
   const dispatch = useDispatch();
   const pages = new Array(totalPages).fill();
 
-  const handleClick = async query => {
+  const handleClick = async (query) => {
     if (!query) {
       return;
     }

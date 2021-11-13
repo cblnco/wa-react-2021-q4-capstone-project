@@ -105,9 +105,9 @@ const Header = () => {
   const history = useHistory();
   const [isSearchVisible, setIsSearchVisible] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-  const { totalUnits } = useSelector(state => state.cart);
+  const { totalUnits } = useSelector((state) => state.cart);
 
-  const onSearchChange = event => {
+  const onSearchChange = (event) => {
     const q = event.target.value;
     setSearchTerm(q);
   };
@@ -119,14 +119,14 @@ const Header = () => {
     }
   };
 
-  const onSearchKeyDown = event => {
+  const onSearchKeyDown = (event) => {
     if (event.key === 'Enter') {
       toSearch();
     }
   };
 
   const toggleSearchBar = () => {
-    setIsSearchVisible(v => !v);
+    setIsSearchVisible((v) => !v);
     setSearchTerm('');
   };
 

@@ -99,7 +99,7 @@ const Total = styled.div`
 const Cart = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { shoppingCart, totalPrice } = useSelector(state => state.cart);
+  const { shoppingCart, totalPrice } = useSelector((state) => state.cart);
   const productKeys = Object.keys(shoppingCart);
 
   const changeQuantity = (id, increment) =>
@@ -114,7 +114,7 @@ const Cart = () => {
         )}
         {productKeys.length > 0 && (
           <ProductRows>
-            {productKeys.map(key => {
+            {productKeys.map((key) => {
               const {
                 id,
                 name,
@@ -135,7 +135,7 @@ const Cart = () => {
                       isUpDisabled={stock === quantity}
                       isDownDisabled={quantity === 0}
                       quantity={quantity}
-                      changeQuantity={inc => changeQuantity(id, inc)}
+                      changeQuantity={(inc) => changeQuantity(id, inc)}
                     />
                     <Subtotal>Subtotal: {`$${subtotal.toFixed(2)}`}</Subtotal>
                     <DeleteButton

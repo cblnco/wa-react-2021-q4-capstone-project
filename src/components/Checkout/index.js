@@ -115,14 +115,14 @@ const Checkout = () => {
 
   const history = useHistory();
   const { customer, email, zipcode, notes } = formState;
-  const { shoppingCart, totalPrice } = useSelector(state => state.cart);
+  const { shoppingCart, totalPrice } = useSelector((state) => state.cart);
   const productKeys = Object.keys(shoppingCart);
 
-  const handleOnChange = event => {
+  const handleOnChange = (event) => {
     const fieldName = event.target.name;
     const value = event.target.value;
 
-    setFormState(formState => ({
+    setFormState((formState) => ({
       ...formState,
       [fieldName]: value,
     }));
@@ -176,7 +176,7 @@ const Checkout = () => {
             </FormContainer>
             <div>
               <OrderTitle>Order Summary:</OrderTitle>
-              {productKeys.map(key => {
+              {productKeys.map((key) => {
                 const { id, name, quantity, subtotal } = shoppingCart[key];
                 return (
                   <ProductSummary key={`product-${id}-summary`}>

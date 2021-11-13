@@ -70,7 +70,7 @@ const Description = ({
     <Price>{`$${price}`}</Price>
     <TagsTitle>Tags</TagsTitle>
     <TagsContainer>
-      {tags.map(tag => (
+      {tags.map((tag) => (
         <Tag key={`product-${tag}-tags`}>{tag}</Tag>
       ))}
     </TagsContainer>

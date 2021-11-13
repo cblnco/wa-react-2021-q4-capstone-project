@@ -16,7 +16,7 @@ const INITIAL_STATE = {
   isLoading: true,
 };
 
-const usePrismicAPI = query => {
+const usePrismicAPI = (query) => {
   const { ref: apiRef, isLoading: isApiMetadataLoading } = useLatestAPI();
   const [prismicResponse, setPrismicResponse] = useState(INITIAL_STATE);
 

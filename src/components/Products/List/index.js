@@ -124,7 +124,7 @@ const getFilteredProducts = (isLoading, filters, results) => {
   }
 
   if (filters) {
-    return results.filter(product => {
+    return results.filter((product) => {
       const {
         data: {
           category: { slug },
@@ -198,8 +198,8 @@ const List = ({
   const filteredProducts = getFilteredProducts(isLoading, filters, results);
 
   const dispatch = useDispatch();
-  const { shoppingCart } = useSelector(state => state.cart);
-  const dispatchToCart = cartProduct => dispatch(addToCart({ cartProduct }));
+  const { shoppingCart } = useSelector((state) => state.cart);
+  const dispatchToCart = (cartProduct) => dispatch(addToCart({ cartProduct }));
 
   return (
     <div>
