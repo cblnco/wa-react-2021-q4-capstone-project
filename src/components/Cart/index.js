@@ -132,6 +132,7 @@ const Cart = () => {
                     <Name>{name}</Name>
                     <Price>Unit price: {`$${price}`}</Price>
                     <Units
+                      prodId={id}
                       isUpDisabled={stock === quantity}
                       isDownDisabled={quantity === 0}
                       quantity={quantity}
@@ -139,6 +140,7 @@ const Cart = () => {
                     />
                     <Subtotal>Subtotal: {`$${subtotal.toFixed(2)}`}</Subtotal>
                     <DeleteButton
+                      aria-label={`delete-${id}-button`}
                       onClick={() => dispatch(deleteProduct({ id }))}
                     >
                       <Trash2 size="26" />

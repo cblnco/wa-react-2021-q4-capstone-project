@@ -139,6 +139,7 @@ const Detail = () => {
             tags={tags}
           />
           <Quantity
+            prodId={id}
             stock={stock}
             productQuantity={productQuantity}
             onCartDispatch={onCartDispatch}

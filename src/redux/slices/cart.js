@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
+export const initialState = {
   shoppingCart: {},
   totalUnits: 0,
   totalPrice: 0,

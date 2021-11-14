@@ -83,6 +83,7 @@ const Stock = styled.div`
 `;
 
 export const Units = ({
+  prodId,
   isUpDisabled,
   isDownDisabled,
   quantity,
@@ -91,14 +92,16 @@ export const Units = ({
   <UnitsContainer>
     <Button
       isActive={!isDownDisabled}
+      aria-label={`less-${prodId}-button`}
       disabled={isDownDisabled}
       onClick={() => changeQuantity(-1)}
     >
       <ChevronDown color="#767472" />
     </Button>
-    <Input value={quantity} disabled />
+    <Input value={quantity} aria-label={`quantity-${prodId}-input`} disabled />
     <Button
       isActive={!isUpDisabled}
+      aria-label={`more-${prodId}-button`}
       disabled={isUpDisabled}
       onClick={() => changeQuantity(1)}
     >
@@ -107,7 +110,7 @@ export const Units = ({
   </UnitsContainer>
 );
 
-const Quantity = ({ stock, productQuantity, onCartDispatch }) => {
+const Quantity = ({ prodId, stock, productQuantity, onCartDispatch }) => {
   const isDisabled = stock === productQuantity;
   const [quantity, setQuantity] = useState(1);
 
@@ -130,6 +133,7 @@ const Quantity = ({ stock, productQuantity, onCartDispatch }) => {
       <Title>QUANTITY</Title>
       <Stock>Current stock: {stock}</Stock>
       <Units
+        prodId={prodId}
         isUpDisabled={isDisabled}
         isDownDisabled={isDisabled}
         quantity={quantity}
