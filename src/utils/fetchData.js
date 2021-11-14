@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const fetchData = async url => {
+const fetchData = async (url) => {
   let response = null;
 
   try {

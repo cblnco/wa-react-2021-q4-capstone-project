@@ -35,7 +35,7 @@ const SpecValue = styled.div`
   font-size: 16px;
 `;
 
-const getColumns = specs => {
+const getColumns = (specs) => {
   if (specs.length <= 5) {
     return { firstColumn: specs, secondColumn: [] };
   }

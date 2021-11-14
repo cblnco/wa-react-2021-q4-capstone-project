@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { usePrismicAPI } from './usePrismicAPI';
 
 const usePrismicRedux = (stateName, query, slice) => {
-  const state = useSelector(state => state[stateName]);
+  const state = useSelector((state) => state[stateName]);
   const dispatch = useDispatch();
 
   const { data, isLoading } = usePrismicAPI(query);

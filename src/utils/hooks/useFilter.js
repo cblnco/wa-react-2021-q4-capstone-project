@@ -3,9 +3,9 @@ import { useEffect, useState } from 'react';
 let globalFilters = {};
 let observers = [];
 
-const setFilter = route => {
+const setFilter = (route) => {
   globalFilters = route;
-  observers.forEach(updater => updater(globalFilters));
+  observers.forEach((updater) => updater(globalFilters));
 };
 
 const useFilter = () => {
@@ -16,7 +16,7 @@ const useFilter = () => {
     setCurrentFilters(globalFilters);
 
     return () => {
-      observers = observers.filter(updater => updater !== setCurrentFilters);
+      observers = observers.filter((updater) => updater !== setCurrentFilters);
     };
   }, []);
 

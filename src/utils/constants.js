@@ -1,7 +1,6 @@
 export const API_BASE_URL = 'https://wizeline-academy.cdn.prismic.io/api/v2';
-export const BANNERS_QUERY = `${encodeURIComponent(
-  '[[at(document.type, "banner")]]'
-)}&lang=en-us&pageSize=5`;
+export const BANNERS_QUERY =
+  '%5B%5Bat(document.type%2C%20%22banner%22)%5D%5D&lang=en-us&pageSize=5';
 export const CATEGORIES_QUERY =
   '%5B%5Bat(document.type%2C%20%22category%22)%5D%5D&lang=en-us&pageSize=30';
 export const FEATURED_PRODS_QUERY =

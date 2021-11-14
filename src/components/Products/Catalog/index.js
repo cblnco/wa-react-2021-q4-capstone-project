@@ -27,7 +27,7 @@ const Title = styled.div`
   margin-bottom: 3rem;
 `;
 
-const processFilters = filters => {
+const processFilters = (filters) => {
   let areFiltersActive = false;
 
   for (const key in filters) {

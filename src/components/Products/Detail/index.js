@@ -12,6 +12,8 @@ import styled from 'styled-components';
 import Description from './Description';
 import Quantity from './Quantity';
 import Specs from './Specs';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart } from '../../../redux/slices/cart';
 
 const DetailContainer = styled.div`
   display: grid;
@@ -60,6 +62,8 @@ const MainImage = styled.img`
 const Detail = () => {
   const { productId } = useParams();
   const query = PRODUCT_QUERY.replace('{productId}', productId);
+  const dispatch = useDispatch();
+  const { shoppingCart } = useSelector((state) => state.cart);
   const { data, isLoading } = usePrismicAPI(query);
 
   if (isLoading) {
@@ -67,13 +71,14 @@ const Detail = () => {
   }
 
   const {
+    id,
     data: {
-      id,
       name,
       price,
       sku,
       stock,
       images,
+      mainimage,
       category,
       short_description,
       specs,
@@ -81,8 +86,27 @@ const Detail = () => {
     tags,
   } = data.results[0];
 
+  const productQuantity = shoppingCart[id] ? shoppingCart[id].quantity : 0;
+
+  const onCartDispatch = (quantity) => {
+    const { url, alt } = mainimage;
+    dispatch(
+      addToCart({
+        cartProduct: {
+          id,
+          name,
+          stock,
+          mainImage: { url, alt },
+          price,
+          quantity,
+          subtotal: price * quantity,
+        },
+      })
+    );
+  };
+
   const settings = {
-    customPaging: i => {
+    customPaging: (i) => {
       const {
         image: { alt, url },
       } = images[i];
@@ -114,7 +138,12 @@ const Detail = () => {
             price={price}
             tags={tags}
           />
-          <Quantity stock={stock} />
+          <Quantity
+            prodId={id}
+            stock={stock}
+            productQuantity={productQuantity}
+            onCartDispatch={onCartDispatch}
+          />
         </div>
       </DetailContainer>
       <Specs specs={specs} />

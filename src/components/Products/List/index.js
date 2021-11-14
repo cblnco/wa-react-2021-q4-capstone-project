@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import Skeleton from '../Skeleton';
 import { Link } from 'react-router-dom';
 import Navigation from '../Navigation';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart } from '../../../redux/slices/cart';
 
 const ProductContainer = styled.div`
   display: grid;
@@ -82,28 +84,33 @@ const DetailsLink = styled(Link)`
   color: #918b83;
 `;
 
-const CartButton = styled.button`
+export const CartButton = styled.button`
   width: 100%;
   padding: 0.6rem;
   font-size: 21px;
-  background-color: #d3c8b4;
-  border: 1px solid #aaa79f;
-  color: #474645;
+  background-color: ${({ isActive }) => (isActive ? '#d3c8b4' : '#dedede')};
+  border: ${({ isActive }) =>
+    isActive ? '1px solid #aaa79f' : '1px solid #c9c9c9'};
+  color: ${({ isActive }) => (isActive ? '#474645' : '#969494')};
   border-radius: 3px;
   transition: 0.2s ease-in-out;
   cursor: pointer;
   box-shadow: 2px 3px 5px -4px rgba(0, 0, 0, 0.32);
 
   &:hover {
-    color: #52504f;
+    ${({ isActive }) =>
+      isActive &&
+      `color: #52504f;
     background-color: #d9ccb3;
-    border: solid 1px #b5b3ad;
+    border: solid 1px #b5b3ad;`}
   }
 
   &:active {
-    color: #3e3d3d;
+    ${({ isActive }) =>
+      isActive &&
+      `color: #3e3d3d;
     margin-left: 1px;
-    background-color: #cabfab;
+    background-color: #cabfab;`}
   }
 `;
 
@@ -117,7 +124,7 @@ const getFilteredProducts = (isLoading, filters, results) => {
   }
 
   if (filters) {
-    return results.filter(product => {
+    return results.filter((product) => {
       const {
         data: {
           category: { slug },
@@ -131,24 +138,53 @@ const getFilteredProducts = (isLoading, filters, results) => {
   return results;
 };
 
-const Product = ({ id, name, background, category, price, alt }) => (
-  <ProductContent>
-    <PictureContent>
-      <Image src={background} alt={alt} />
-      <Category>{category}</Category>
-    </PictureContent>
-    <Description>
-      <ProductName>{name}</ProductName>
-      <PriceContent>
-        <ProductPrice>{`$${price}`}</ProductPrice>
-        <DetailsContent>
-          <DetailsLink to={`/product/${id}`}>More details</DetailsLink>
-        </DetailsContent>
-      </PriceContent>
-      <CartButton>Add to cart</CartButton>
-    </Description>
-  </ProductContent>
-);
+const Product = ({
+  id,
+  name,
+  stock,
+  cartData,
+  mainImage,
+  category,
+  price,
+  dispatchToCart,
+}) => {
+  const { url, alt } = mainImage;
+  const isDisabled = cartData.quantity === stock;
+  return (
+    <ProductContent>
+      <PictureContent>
+        <Image src={url} alt={alt} />
+        <Category>{category}</Category>
+      </PictureContent>
+      <Description>
+        <ProductName>{name}</ProductName>
+        <PriceContent>
+          <ProductPrice>{`$${price}`}</ProductPrice>
+          <DetailsContent>
+            <DetailsLink to={`/product/${id}`}>More details</DetailsLink>
+          </DetailsContent>
+        </PriceContent>
+        <CartButton
+          isActive={!isDisabled}
+          disabled={isDisabled}
+          onClick={() =>
+            dispatchToCart({
+              id,
+              name,
+              stock,
+              mainImage,
+              price,
+              quantity: 1,
+              subtotal: price,
+            })
+          }
+        >
+          Add to cart
+        </CartButton>
+      </Description>
+    </ProductContent>
+  );
+};
 
 const List = ({
   products,
@@ -160,6 +196,10 @@ const List = ({
 }) => {
   const { page, total_pages, next_page, prev_page, results } = products;
   const filteredProducts = getFilteredProducts(isLoading, filters, results);
+
+  const dispatch = useDispatch();
+  const { shoppingCart } = useSelector((state) => state.cart);
+  const dispatchToCart = (cartProduct) => dispatch(addToCart({ cartProduct }));
 
   return (
     <div>
@@ -173,18 +213,21 @@ const List = ({
               data: {
                 name,
                 price,
+                stock,
                 category: { slug },
-                mainimage: { url, alt },
+                mainimage,
               },
             }) => (
               <Product
                 key={`product-${id}`}
                 id={id}
-                background={url}
+                cartData={shoppingCart[id] || { quantity: 0 }}
                 name={name}
+                stock={stock}
+                mainImage={mainimage}
                 category={slug}
                 price={price}
-                alt={alt}
+                dispatchToCart={dispatchToCart}
               />
             )
           )

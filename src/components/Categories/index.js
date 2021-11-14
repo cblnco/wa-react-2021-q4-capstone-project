@@ -88,7 +88,8 @@ const categoryCards = (categories, redirect) =>
 const Categories = ({ categories = [], isLoading }) => {
   const history = useHistory();
 
-  const toProduct = category => history.push(`/products?category=${category}`);
+  const toProduct = (category) =>
+    history.push(`/products?category=${category}`);
 
   const cards = isLoading ? (
     <SkeletonCategories amount={5} />

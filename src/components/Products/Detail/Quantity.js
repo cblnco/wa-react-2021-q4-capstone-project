@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ChevronDown, ChevronUp } from 'react-feather';
 import styled from 'styled-components';
 
-const Units = styled.div`
+const UnitsContainer = styled.div`
   width: 9.5rem;
   height: 2.4rem;
   margin-bottom: 4rem;
@@ -19,24 +19,33 @@ const CartButton = styled.button`
   max-width: 32rem;
   padding: 0.6rem;
   font-size: 21px;
-  background-color: #d3c8b4;
-  border: 1px solid #aaa79f;
-  color: #474645;
+
+  background-color: #dedede;
+  border: 1px solid #c9c9c9;
+  color: #969494;
+  background-color: ${({ isActive }) => (isActive ? '#d3c8b4' : '#dedede')};
+  border: ${({ isActive }) =>
+    isActive ? '1px solid #aaa79f' : '1px solid #c9c9c9'};
+  color: ${({ isActive }) => (isActive ? '#474645' : '#969494')};
   border-radius: 3px;
   transition: 0.2s ease-in-out;
   cursor: pointer;
   box-shadow: 2px 3px 5px -4px rgba(0, 0, 0, 0.32);
 
   &:hover {
-    color: #52504f;
+    ${({ isActive }) =>
+      isActive &&
+      `color: #52504f; 
     background-color: #d9ccb3;
-    border: solid 1px #b5b3ad;
+    border: solid 1px #b5b3ad;`}
   }
 
   &:active {
-    color: #3e3d3d;
+    ${({ isActive }) =>
+      isActive &&
+      `color: #3e3d3d;
     margin-left: 1px;
-    background-color: #cabfab;
+    background-color: #cabfab;`}
   }
 `;
 
@@ -51,7 +60,7 @@ const Button = styled.button`
   height: 100%;
   border: 2px solid #cbc8c1;
   height: 2.4rem;
-  cursor: pointer;
+  cursor: ${({ isActive }) => (isActive ? 'pointer' : 'not-allowed')};
 `;
 
 const Input = styled.input`
@@ -73,34 +82,70 @@ const Stock = styled.div`
   margin-bottom: 0.3rem;
 `;
 
-const Quantity = ({ stock }) => {
+export const Units = ({
+  prodId,
+  isUpDisabled,
+  isDownDisabled,
+  quantity,
+  changeQuantity,
+}) => (
+  <UnitsContainer>
+    <Button
+      isActive={!isDownDisabled}
+      aria-label={`less-${prodId}-button`}
+      disabled={isDownDisabled}
+      onClick={() => changeQuantity(-1)}
+    >
+      <ChevronDown color="#767472" />
+    </Button>
+    <Input value={quantity} aria-label={`quantity-${prodId}-input`} disabled />
+    <Button
+      isActive={!isUpDisabled}
+      aria-label={`more-${prodId}-button`}
+      disabled={isUpDisabled}
+      onClick={() => changeQuantity(1)}
+    >
+      <ChevronUp color="#767472" />
+    </Button>
+  </UnitsContainer>
+);
+
+const Quantity = ({ prodId, stock, productQuantity, onCartDispatch }) => {
+  const isDisabled = stock === productQuantity;
   const [quantity, setQuantity] = useState(1);
 
-  const changeQuantity = increment => {
+  const changeQuantity = (increment) => {
     let value = quantity + increment;
-    if (value < 1) {
-      value = 1;
-    } else if (value > stock) {
-      value = stock;
+    if (value < 1 || value + productQuantity > stock) {
+      return;
     }
 
-    setQuantity(value);
+    setQuantity(quantity + increment);
+  };
+
+  const onAddToCart = () => {
+    setQuantity(1);
+    onCartDispatch(quantity);
   };
 
   return (
     <>
       <Title>QUANTITY</Title>
       <Stock>Current stock: {stock}</Stock>
-      <Units>
-        <Button onClick={() => changeQuantity(-1)}>
-          <ChevronDown color="#767472" />
-        </Button>
-        <Input value={quantity} disabled />
-        <Button onClick={() => changeQuantity(1)}>
-          <ChevronUp color="#767472" />
-        </Button>
-      </Units>
-      <CartButton>Add to cart</CartButton>
+      <Units
+        prodId={prodId}
+        isUpDisabled={isDisabled}
+        isDownDisabled={isDisabled}
+        quantity={quantity}
+        changeQuantity={changeQuantity}
+      />
+      <CartButton
+        isActive={!isDisabled}
+        disabled={isDisabled}
+        onClick={onAddToCart}
+      >
+        Add to cart
+      </CartButton>
     </>
   );
 };

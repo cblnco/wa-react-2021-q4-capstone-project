@@ -6,6 +6,7 @@ import {
   ShoppingBag as ShoppingIcon,
   X,
 } from 'react-feather';
+import { useSelector } from 'react-redux';
 
 const StyledHeader = styled.header`
   position: fixed;
@@ -39,7 +40,7 @@ const Title = styled(Link)`
 const Button = styled.button`
   background-color: transparent;
   border: none;
-  cursor: not-allowed;
+  cursor: pointer;
   margin: 0 0.3rem;
 `;
 
@@ -82,12 +83,31 @@ const SearchButton = styled(Button)`
   cursor: pointer;
 `;
 
+const CartButton = styled(Button)`
+  position: relative;
+`;
+
+const NumberBadge = styled.div`
+  position: absolute;
+  right: -5px;
+  top: -1px;
+  padding: 2px;
+  width: 16px;
+  font-size: 13px;
+  border-radius: 50%;
+  color: #504f4e;
+  background-color: #e1bf8b;
+  box-shadow: 2px 3px 5px -4px rgba(0, 0, 0, 0.32);
+  border: 1px solid #c8b28f;
+`;
+
 const Header = () => {
   const history = useHistory();
   const [isSearchVisible, setIsSearchVisible] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const { totalUnits } = useSelector((state) => state.cart);
 
-  const onSearchChange = event => {
+  const onSearchChange = (event) => {
     const q = event.target.value;
     setSearchTerm(q);
   };
@@ -99,14 +119,14 @@ const Header = () => {
     }
   };
 
-  const onSearchKeyDown = event => {
+  const onSearchKeyDown = (event) => {
     if (event.key === 'Enter') {
       toSearch();
     }
   };
 
   const toggleSearchBar = () => {
-    setIsSearchVisible(v => !v);
+    setIsSearchVisible((v) => !v);
     setSearchTerm('');
   };
 
@@ -149,9 +169,10 @@ const Header = () => {
         <SearchButton onClick={toggleSearchBar}>
           <SearchIcon style={{ color: '#6b665c' }} size={25} />
         </SearchButton>
-        <Button>
+        <CartButton onClick={() => history.push('/cart')}>
+          {totalUnits > 0 && <NumberBadge>{totalUnits}</NumberBadge>}
           <ShoppingIcon style={{ color: '#6b665c' }} size={24} />
-        </Button>
+        </CartButton>
       </HeaderContainer>
     </StyledHeader>
   );

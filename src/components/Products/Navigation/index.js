@@ -28,7 +28,7 @@ const PageNumber = styled.button`
   transition: 0.2s ease-in-out;
 `;
 
-const NavButton = styled.div`
+const NavButton = styled.button`
   background-color: transparent;
   border: none;
   color: ${({ isActive }) => (isActive ? '#403e3e' : '#ababab')};
@@ -40,7 +40,7 @@ const Navigation = ({ currentPage, totalPages, nextPage, prevPage }) => {
   const dispatch = useDispatch();
   const pages = new Array(totalPages).fill();
 
-  const handleClick = async query => {
+  const handleClick = async (query) => {
     if (!query) {
       return;
     }
@@ -52,7 +52,11 @@ const Navigation = ({ currentPage, totalPages, nextPage, prevPage }) => {
 
   return (
     <NavigationContent>
-      <NavButton isActive={!!prevPage} onClick={() => handleClick(prevPage)}>
+      <NavButton
+        name="prev-btn"
+        isActive={!!prevPage}
+        onClick={() => handleClick(prevPage)}
+      >
         <ArrowLeft size={26} />
       </NavButton>
       {pages.map((_, idx) => {
@@ -66,7 +70,11 @@ const Navigation = ({ currentPage, totalPages, nextPage, prevPage }) => {
           </NumberContainer>
         );
       })}
-      <NavButton isActive={!!nextPage} onClick={() => handleClick(nextPage)}>
+      <NavButton
+        name="next-btn"
+        isActive={!!nextPage}
+        onClick={() => handleClick(nextPage)}
+      >
         <ArrowRight size={26} />
       </NavButton>
     </NavigationContent>
