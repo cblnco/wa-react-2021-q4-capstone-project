@@ -3,7 +3,7 @@ import { ChevronDown, ChevronUp } from 'react-feather';
 import styled from 'styled-components';
 
 const UnitsContainer = styled.div`
-  width: 9.5rem;
+  width: 10rem;
   height: 2.4rem;
   margin-bottom: 4rem;
   box-shadow: 2px 3px 5px -4px rgba(0, 0, 0, 0.32);
